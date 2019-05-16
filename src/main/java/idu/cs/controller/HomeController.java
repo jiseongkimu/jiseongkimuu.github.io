@@ -60,14 +60,18 @@ public class HomeController {
 	}
 	@PutMapping("/users/{id}") 
 	//@RequestMapping(value=""/users/{id}" method=RequestMethod.UPDATE)
-	public String updateUserById(@PathVariable(value = "id") Long userId,  
-	Model model) throws ResourceNotFoundException {
+	public ResponseEntity updateUserById(@PathVariable(value =
+	"id") Long userId, @Valid @RequestBody User userDetails, Model model)
+			throws ResourceNotFoundException {
+		//userDetails 폼을 통해 전송된 객체. user는 id로 jpa를 통해서 가져온 객체
 		User user = userRepo.findById(userId)
 				.orElseThrow(() -> 
 				new ResourceNotFoundException("not found " + userId ));
-		userRepo.save(user); // 객체 삭제 -> jpa : record 삭제로 적용
-		model.addAttribute("name", user.getName());
-		return "disjoin";
+		user.setName(userDetails.getName());
+		user.setCompany(userDetails.getCompany());
+		User userUpdate = userRepo.save(user); // 객체 삭제 -> jpa : record 삭제로 적용
+		//model.addAttribute("name", user.getName());
+		return ResponseEntity.ok(userUpdate);
 	}
 	@DeleteMapping("/users/{id}") 
 	//@RequestMapping(value=""/users/{id}" method=RequestMethod.DELETE)
