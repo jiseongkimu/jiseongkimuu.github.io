@@ -47,6 +47,8 @@ public class HomeController {
 		model.addAttribute("name", user.getName());
 		model.addAttribute("company", user.getCompany());
 		return "user";
+		
+		
 	}	
 	@GetMapping("/regform")
 	public String loadRegForm(Model model) {		
