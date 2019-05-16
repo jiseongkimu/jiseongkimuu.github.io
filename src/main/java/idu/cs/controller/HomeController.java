@@ -60,6 +60,8 @@ public class HomeController {
 		model.addAttribute("users", userRepo.findAll());
 		return "redirect:/users";
 	}
+	
+	
 	@PutMapping("/users/{id}") 
 	//@RequestMapping(value=""/users/{id}" method=RequestMethod.UPDATE)
 	public ResponseEntity updateUserById(@PathVariable(value =
